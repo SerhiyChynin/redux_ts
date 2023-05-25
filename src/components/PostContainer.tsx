@@ -1,9 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PostItem from "./PostItem";
 import { postAPI } from "../servises/PostServise";
+import { useState } from "react";
 
 const PostContainer = () => {
-    const {data: posts, error, isLoading} = postAPI.useFetchAllPostsQuery(5)
+    const [limit, setLimit] = useState(10);
+    const { data: posts, error, isLoading, refetch } = postAPI.useFetchAllPostsQuery(limit, {
+        // pollingInterval: 1000 // для онлайн чатов и тд, типа вебсокета, делает запрос и обновляет каждій промежуток времени.
+    })
+
+    useEffect(() => {
+        // setTimeout(() => {
+        //     setLimit(3)
+        // }, 2000)
+    }, [])
     return (
         <div>
             <div className="post__list">
